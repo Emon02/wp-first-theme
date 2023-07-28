@@ -28,9 +28,27 @@ function emon_css_js_file_calling(){
     wp_enqueue_script('main', get_template_directory_uri().'/js/main.js', array(), '1.0.0', 'true');
 };
 
-add_action('wp_enqueue_scripts','emon_css_js_file_calling')
+add_action('wp_enqueue_scripts','emon_css_js_file_calling');
 
+// Theme Function
+function emon_customizing_register($wp_customize){
+    $wp_customize->add_section('emon_header_area', array(
+        'title' => __('Header Area', 'abdulalimemon'),
+        'description' => 'update header area'
+    ));
 
+    $wp_customize->add_setting('emon_logo', array(
+        'default' => get_bloginfo('template_directory').'/img/emon.png', 
+    ));
+
+    $wp_customize->add_control(new WP_Customize_Image_Control($wp_customize, 'emon_logo', array(
+        'label' => 'Logo Upload',
+        'setting' => 'emon_logo',
+        'section' => 'emon_header_area'
+    )));
+};
+
+add_action('customize_register', 'emon_customizing_register');
 
 
 
